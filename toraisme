@@ -1,1 +1,2 @@
 loadstring(game:HttpGet("https://paste.ee/r/glpPpoMo"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/zhuexx/Vow/refs/heads/main/LoaderV2"))()
