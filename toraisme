@@ -1,5 +1,3 @@
-loadstring(game:HttpGet("https://paste.ee/r/glpPpoMo"))()
-
 local Players = game:GetService("Players")
 local StarterGui = game:GetService("StarterGui")
 local ContextActionService = game:GetService("ContextActionService")
